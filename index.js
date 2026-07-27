@@ -95,6 +95,28 @@ app.patch("/movies/:id",(req,res)=>{
 
 })
 
+// full update movie
+app.put("/movies/:id",(req,res)=>{
+    const id = req.params.id;
+    const userData = req.body;
+    const userMovie = movies.find((m)=>(m.id == id));
+    if(userMovie != undefined){
+        // console.log(userMovie);
+        // console.log(userData);
+        
+        Object.assign(userMovie,userData);
+    }
+    else{
+        res.send("Movie Not found!");
+        return;
+    }
+    const data = {
+        "message": "Movie replaced successfully",
+        "movie": userMovie
+    }
+    res.json(data);
+})
+
 // Delete Movie
 app.delete("/movies/:id",(req,res)=>{
     const id = req.params.id;
